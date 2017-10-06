@@ -1,0 +1,53 @@
+intrinsic-ratio-box($ratio)
+  height 0
+  padding-bottom $ratio
+  position relative
+  
+  > div
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 80%
+    
+fade-in-wall($cols, $rows, $aName = fadeInScale)
+  display flex
+  flex-wrap wrap
+  
+  .slice
+    flex 1 1 (100% / $cols)
+    background-size (100% * $cols)
+    animation 4s $aName ease-in-out infinite
+    
+    $total = $cols * $rows
+    for n in 1..$total
+      &:nth-child({n})
+        animation-delay .2s * (n - 1)
+        background-position-x -100% * ((n - 1) % $cols)
+        background-position-y -100% * floor((n - 1) / $cols)
+
+.wall
+  intrinsic-ratio-box 56.25%
+  
+.inner
+  fade-in-wall(4, 3)
+  
+.slice
+  background url('./animate.jpg')
+      
+@keyframes fadeInScale
+  0%
+    transform scale(.8)
+    opacity 0
+    
+  30%
+    transform scale(1)
+    opacity 1
+    
+  70%
+    transform scale(1)
+    opacity 1
+    
+  100%
+    transform scale(.8)
+    opacity 0
